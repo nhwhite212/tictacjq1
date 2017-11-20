@@ -1,0 +1,323 @@
+<<<<<<< HEAD
+<html>
+<head>
+<style>
+	#container {
+		margin: auto;
+	}
+
+	.square {
+		float: left;
+		width: 30px;
+		height: 30px;
+		border: 1px solid #bdbdbd;
+		text-align: center;
+		line-height: 30px;
+	}
+</style>
+
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+
+
+var TicTacToe = {
+
+	/* If the same symbol is present in these pairs, that player has won */
+
+	winning_squares: [	
+						['0', '1', '2'],
+						['3', '4', '5'],
+						['6', '7', '8'],
+						['0', '3', '6'],
+						['0', '4', '8'],
+						['1', '4', '7'],
+						['2', '5', '8'],
+						['2', '4', '6']
+	],
+
+	init: function() {
+		/* Draw the board */
+                /* Start the container off as empty, then add squares to id */
+
+		$("#container").html('');
+                /* create the square for each row, and give them an id of 0 to 9 */
+
+		for (i = 0; i < 9; i++) {
+			$("#container").append("<div id=" + i + " onclick='TicTacToe.clicked(this.id)' class='square'></div>");
+
+                /* Only put 3 squares on a row   */
+
+			if (((i + 1) % 3) == 0) {
+				$("#container").append("<div style='clear:both;'>");
+			}
+		}
+              
+               /*  X makes the first move   */
+		this.player = 'X';
+	},
+
+	/* Called on each square click. Displays correct symbol for the clicked  */
+        /*	square, checks if the game is won or has ended in a tie */
+
+	clicked: function(square_id) {
+                /* See if this square is empty, if so put an X or O in it  */
+
+		if ("" == $('#' + square_id).html()) {
+			$('#' + square_id).text(this.player);
+
+                        /*  Call is_game_won function to see if this move wins the game   */
+                        currentplayer = this.player;
+			game_is_won = this.is_game_won(square_id);
+                       
+                        /* if the game_is_won, declare victory for this.player  */
+
+			if (game_is_won) {
+                         /* use setTimeout to delay confirm message so that last move is recorded  */
+                         /* this is needed for some browsers and mobile devices  */
+
+                                setTimeout(function(){TicTacToe.end_game(currentplayer);},100);
+				return;}
+				
+			else
+
+                         /*  Check for a tie game  */
+				game_is_tied = this.is_game_tied();
+				if (game_is_tied) {
+                         /* use setTimeout to delay confirm message so that last move is recorded  */
+				setTimeout(function(){TicTacToe.end_game();},100);
+					return;
+				}
+                   
+                        /* if not won or tied, switch to the other player's move  */
+
+				this.player = (this.player == 'X')? 'O': 'X';
+		}
+			
+	},
+
+	/* Did clicking on this square result in a victory? */
+
+	is_game_won: function(square_id) {
+		for (i in this.winning_squares) {
+			if (jQuery.inArray(square_id, this.winning_squares[i]) != -1) {
+				var squares = this.winning_squares[i];
+				var pattern = '';
+				for (j in squares) {
+					console.log(squares[j]);
+					pattern += $('#' + squares[j]).html();
+				}
+				symbol = this.player;
+				if (symbol + symbol + symbol == pattern) {
+					return true;
+				}
+			}
+		}
+		return false;
+	},
+
+
+
+	/* All squares filled but no winner? */
+
+	is_game_tied: function() {
+		for (i = 0; i < 9; i++) {
+			if ('' == $('#' + i).html())
+				return false;
+		}
+		return true;
+	},
+
+	/* Display message and restart if requested */
+	end_game: function(winner) {
+		if (winner)
+			msg = winner + ' won! Play again?';
+		else
+			msg =  'The game has ended in a tie. Play again?';
+		restart_game = confirm(msg);
+		if (restart_game)
+			this.init();
+	}
+};
+
+
+
+
+$(document).ready(function(){
+	TicTacToe.init();
+});
+
+</script>
+</head>
+
+<body>
+<div id="container"></div>
+</body>
+</html>
+=======
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jQuery Mobile Web App</title>
+<link href="jquery-mobile/jquery.mobile.theme-1.3.0.min.css" rel="stylesheet" type="text/css"/>
+<link href="jquery-mobile/jquery.mobile.structure-1.3.0.min.css" rel="stylesheet" type="text/css"/>
+<script src="jquery-mobile/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="jquery-mobile/jquery.mobile-1.3.0.min.js" type="text/javascript"></script>
+<style>
+	#container {
+		margin: auto;
+		
+		
+	}
+/* Define class square */
+
+	.square {
+		float: left;
+		width: 60px;
+		height: 60px;
+		border: 1px solid black;
+		text-align: center;
+		line-height: 60px;
+	}
+</style>
+
+
+<script type="text/javascript">
+
+
+var TicTacToe = {
+
+	/* If the same symbol is present in these pairs, that player has won */
+
+	winning_squares: [	
+						['0', '1', '2'],
+						['3', '4', '5'],
+						['6', '7', '8'],
+						['0', '3', '6'],
+						['0', '4', '8'],
+						['1', '4', '7'],
+						['2', '5', '8'],
+						['2', '4', '6']
+	],
+
+	init: function() {
+		/* Draw the board */
+                /* Start the container off as empty, then add squares to id */
+
+		$("#container").html('');
+                /* create the square for each row, and give them an id of 0 to 9 */
+
+		for (i = 0; i < 9; i++) {
+			$("#container").append("<div id=" + i + " onclick='TicTacToe.clicked(this.id)' class='square'></div>");
+
+                /* Only put 3 squares on a row   */
+
+			if (((i + 1) % 3) == 0) {
+				$("#container").append("<div style='clear:both;'>");
+			}
+		}
+		
+		
+              
+               /*  X makes the first move   */
+		this.player = 'X';
+	},
+
+	/* Called on each square click. Displays correct symbol for the clicked
+	square, checks if the game is won or has ended in a tie */
+
+	clicked: function(square_id) {
+                /* See if this square is empty, if so put an X or O in it  */
+
+		if ("" == $('#' + square_id).html()) {
+			$('#' + square_id).text(this.player);
+
+                        /*  Call is_game_won function to see if this move wins the game   */
+
+			game_is_won = this.is_game_won(square_id);
+                       
+                        /* if the game_is_won, declare victory for this.player  */
+
+			if (game_is_won)
+			  /* make sure the square gets updated  */
+				{$('#' + square_id).text(this.player);
+				this.end_game(this.player);
+				return;}
+				
+			else
+
+                         /*  Check for a tie game  */
+				game_is_tied = this.is_game_tied();
+				if (game_is_tied) {
+					this.end_game();
+					return;
+				}
+                   
+                        /* if not won or tied, switch to the other player's move  */
+
+				this.player = (this.player == 'X')? 'O': 'X';
+		}
+			
+	},
+
+	/* Did clicking on this square result in a victory? */
+
+	is_game_won: function(square_id) {
+		for (i in this.winning_squares) {
+			if (jQuery.inArray(square_id, this.winning_squares[i]) != -1) {
+				var squares = this.winning_squares[i];
+				var pattern = '';
+				for (j in squares) {
+					console.log(squares[j]);
+					pattern += $('#' + squares[j]).html();
+				}
+				symbol = this.player;
+				if (symbol + symbol + symbol == pattern) {
+					return true;
+				}
+			}
+		}
+		return false;
+	},
+
+
+
+	/* All squares filled but no winner? */
+
+	is_game_tied: function() {
+		for (i = 0; i < 9; i++) {
+			if ('' == $('#' + i).html())
+				return false;
+		}
+		return true;
+	},
+
+	/* Display message and restart if requested */
+	end_game: function(winner) {
+		if (winner)
+			msg = winner + ' won! Play again?';
+		else
+			msg = 'The game has ended in a tie. Play again?';
+	setTimeout(function(){	restart_game = confirm(msg);
+		if (restart_game)
+			tictactoe.init();},100);
+	}
+};
+
+
+/* Start TicTacToe when the document is loaded */
+
+$(document).ready(function(){
+	TicTacToe.init();
+});
+
+</script>
+<title>tictactoe</title>
+</head>
+
+<body>
+<div id="container"></div>
+	
+</body>
+</html>
+>>>>>>> origin/master
